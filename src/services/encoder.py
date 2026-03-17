@@ -61,7 +61,7 @@ def one_hot_encode(json_obj: Dict) -> List[float]:
 
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     # Example usage
     json_example = {
         "use_case": "web_application",

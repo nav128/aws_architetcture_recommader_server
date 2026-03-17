@@ -1,14 +1,5 @@
-import re
 
-from openai import OpenAI
-import json
-
-from dotenv import load_dotenv  
-import os
-
-load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=openai_api_key)
+from services.openai_client import ask_openai
 
 EXTRACTION_PROMPT = """
 You are an AWS solutions architect. Given the README of an AWS sample repository,
@@ -50,15 +41,4 @@ def call_llm(readme_text: str) -> dict:
         readme_text=readme_text[:12000]  # stay within context limits
     )
 
-    resp = client.chat.completions.create(
-        model="gpt-4.1-mini-2025-04-14",
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=1024,
-    )
-
-    raw_text = resp.choices[0].message.content
-
-    # Strip accidental markdown fences if present
-    raw_text = re.sub(r"^```json\s*|```$", "", raw_text, flags=re.MULTILINE).strip()
-
-    return json.loads(raw_text)
+    return ask_openai(prompt)

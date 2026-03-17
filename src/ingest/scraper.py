@@ -5,12 +5,12 @@ import os
 import time
 from typing import Optional
 import requests
-from llm_extract import call_llm
-from models.arch import Architecture
 from dotenv import load_dotenv
 from pathlib import Path
+from ingest.llm_extract import call_llm
+from models.arch import Architecture
+from ingest.history_manger import load_state, save_state
 
-from history_manger import load_state, save_state
 
 load_dotenv()
 
@@ -51,7 +51,9 @@ def scrape_github_aws_samples(
     """
     session = requests.Session()
     session.headers.update(get_headers(github_token))
-    page, visited_repos = load_state().values()
+    state = load_state()
+    page: int = state.get("page", 0)
+    visited_repos: list = state.get("visited_repos", [])
     results: list[Architecture] = []
 
 
@@ -77,12 +79,16 @@ def scrape_github_aws_samples(
         for repo in repos:
             if len(results) >= max_repos:
                 break
+            
 
             name        = repo.get("name", "")
             stars       = repo.get("stargazers_count", 0)
             description = repo.get("description") or None
             repo_url    = repo.get("html_url", "")
 
+            if repo_url in visited_repos:
+                continue
+            
             # ── 2. Filter ─────────────────────────────────────────────────────
             if stars < min_stars:
                 continue
@@ -133,7 +139,7 @@ def scrape_github_aws_samples(
                     services=extracted.get("services", []),
                     source_url=repo_url
                 )
-                results.append(architecture)
+                results.append(architecture.model_dump())
                 print(f"  [ok] {name} ★{stars} → use_case={architecture.use_case}, scale={architecture.scale}")
 
             except Exception as e:
@@ -141,13 +147,13 @@ def scrape_github_aws_samples(
                 continue
 
         page += 1
+        visited_repos.append(repo_url)
         time.sleep(request_delay)
 
     print(f"[GitHub] Done — {len(results)} architectures collected")
-    json.dump([arch.model_dump() for arch in results], Path("architectures.json").open("w"), indent=2   )
     save_state(page, visited_repos)
     return results
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     scrape_github_aws_samples(max_repos=5)
