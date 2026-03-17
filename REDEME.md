@@ -26,7 +26,7 @@ GITHUB_TOKEN=your_github_token_here
 ## Running Locally
 
 ### Option A: Manual MongoDB Docker + Local FastAPI
-*** You can remove the volume mounting from the mongodb run if you do not care fore persistency
+- **You can remove the volume mounting from the mongodb run if you do not care fore persistency**
 **Step 1: Start MongoDB Container**
 ```powershell
 docker run --name mongodb -d -p 27017:27017 -v {your_local_path_for_mongodb_data}:/data/db -e MONGO_INITDB_ROOT_USERNAME=user -e MONGO_INITDB_ROOT_PASSWORD=pass mongo:8.0
