@@ -1,0 +1,31 @@
+
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "-u", "user", "-p", "pass", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  fastapi:
+    build: .
+    container_name: fastapi_app
+    restart: no
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      MONGO_URI: mongodb://user:pass@mongodb:27017
+      OPENAI_API_KEY: {{OPENAI_API_KEY}}
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+    ports:
+      - "8000:8000"
