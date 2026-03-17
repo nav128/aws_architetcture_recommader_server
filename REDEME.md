@@ -1,5 +1,3 @@
-mongo docker =`docker run --name mongodb -d -p 27017:27017 -v {C:\Users\win10\Documents\Moshe\data}:/data/db -e MONGODB_INITDB_ROOT_USERNAME=user -e MONGODB_INITDB_ROOT_PASSWORD=pass mongodb/mongodb-community-server:8.0-ubi8`
-
 
 ## Prerequisites
 - Python 3.12+ (for local development)
