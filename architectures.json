@@ -1,0 +1,94 @@
+[
+  {
+    "title": "Java Meme Generator Sample",
+    "description": "A sample meme generator application demonstrating image processing with a web front-end and back-end worker on AWS.",
+    "use_case": "web_application",
+    "scale": "medium",
+    "traffic_pattern": "bursty",
+    "latency_sensitivity": "medium",
+    "processing_style": "event_driven",
+    "data_intensity": "medium",
+    "availability_requirement": "standard",
+    "ops_preference": "balanced",
+    "budget_sensitivity": "medium",
+    "services": [
+      "Amazon S3",
+      "Amazon DynamoDB",
+      "Amazon SQS",
+      "AWS Elastic Beanstalk",
+      "Amazon EC2"
+    ],
+    "source_url": null
+  },
+  {
+    "title": "Opsworks Example Cookbooks",
+    "description": "Example cookbooks for AWS OpsWorks used with the Getting Started Walkthroughs",
+    "use_case": "internal_tool",
+    "scale": "small",
+    "traffic_pattern": "steady",
+    "latency_sensitivity": "low",
+    "processing_style": "request_response",
+    "data_intensity": "low",
+    "availability_requirement": "standard",
+    "ops_preference": "balanced",
+    "budget_sensitivity": "medium",
+    "services": [
+      "AWS OpsWorks"
+    ],
+    "source_url": null
+  },
+  {
+    "title": "Opsworks Demo Php Simple App",
+    "description": "A sample PHP web application deployed using AWS OpsWorks",
+    "use_case": "web_application",
+    "scale": "small",
+    "traffic_pattern": "steady",
+    "latency_sensitivity": "medium",
+    "processing_style": "request_response",
+    "data_intensity": "low",
+    "availability_requirement": "standard",
+    "ops_preference": "managed_services",
+    "budget_sensitivity": "medium",
+    "services": [
+      "AWS OpsWorks"
+    ],
+    "source_url": null
+  },
+  {
+    "title": "Aws Dynamodb Examples",
+    "description": "Sample code and solutions to build scalable, context-aware AI applications integrating Amazon DynamoDB and Amazon Bedrock.",
+    "use_case": "web_application",
+    "scale": "large",
+    "traffic_pattern": "bursty",
+    "latency_sensitivity": "medium",
+    "processing_style": "request_response",
+    "data_intensity": "medium",
+    "availability_requirement": "high",
+    "ops_preference": "managed_services",
+    "budget_sensitivity": "medium",
+    "services": [
+      "Amazon DynamoDB",
+      "Amazon Bedrock",
+      "Streamlit"
+    ],
+    "source_url": null
+  },
+  {
+    "title": "Aws Java Sample",
+    "description": "A simple Java application demonstrating usage of the AWS SDK for Java with Amazon S3.",
+    "use_case": "internal_tool",
+    "scale": "small",
+    "traffic_pattern": "steady",
+    "latency_sensitivity": "low",
+    "processing_style": "request_response",
+    "data_intensity": "low",
+    "availability_requirement": "standard",
+    "ops_preference": "balanced",
+    "budget_sensitivity": "medium",
+    "services": [
+      "Amazon S3",
+      "IAM"
+    ],
+    "source_url": null
+  }
+]
