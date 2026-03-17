@@ -10,6 +10,8 @@ from models.arch import Architecture
 from dotenv import load_dotenv
 from pathlib import Path
 
+from history_manger import load_state, save_state
+
 load_dotenv()
 
 github_token = os.getenv("GITHUB_TOKEN")  # Optional: GitHub PAT to increase rate limits
@@ -49,9 +51,9 @@ def scrape_github_aws_samples(
     """
     session = requests.Session()
     session.headers.update(get_headers(github_token))
-
+    page, visited_repos = load_state().values()
     results: list[Architecture] = []
-    page = 1
+
 
     print(f"[GitHub] Scraping aws-samples (max={max_repos}, min_stars={min_stars})")
 
@@ -143,7 +145,9 @@ def scrape_github_aws_samples(
 
     print(f"[GitHub] Done — {len(results)} architectures collected")
     json.dump([arch.model_dump() for arch in results], Path("architectures.json").open("w"), indent=2   )
+    save_state(page, visited_repos)
     return results
 
 
-scrape_github_aws_samples(max_repos=5)
+if __name__ == "main":
+    scrape_github_aws_samples(max_repos=5)
